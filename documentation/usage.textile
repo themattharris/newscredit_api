@@ -18,15 +18,11 @@ To stop the services press @ctrl-c@
 
 h2. Adding a crawl site
 
-Using your preferred web browser open @http://localhost:8000/admin@ and login with the superuser details you created on install.
-
-On the site administration page under Crawler you should see an entry *Crawl sites*. Click on the *Add* on that row.
-
-Enter the full website you wish to crawl into the *Site URL:* box, for example @http://www.opendemocracy.net@, and then click save.
-
-The site will then start crawling. You should see the URLs being crawled appearing in the console window which is running the daemon.
-
-Once some content has been crawled visit @http://localhost:8000@ and try searching.
+# Using your preferred web browser open @http://localhost:8000/admin@ and login with the superuser details you created on install.
+# On the site administration page under Crawler you should see an entry *Crawl sites*. Click on the *Add* on that row
+# Enter the full website you wish to crawl into the *Site URL:* box, for example @http://www.opendemocracy.net@, and then click save.
+# The site will then start crawling. You should see the URLs being crawled appearing in the console window which is running the daemon.
+# Once some content has been crawled visit @http://localhost:8000@ and try searching.
 
 h2. Flushing the databases
 
