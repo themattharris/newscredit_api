@@ -50,7 +50,7 @@ SOLR_DATA_DIR = SOLR_ROOT + 'solr/data'
 # 1/x chance that on each scrape, all previous/next links will be followed
 FULL_SCRAPE_CHANCE = 10
 
-# Your OpenCalais API Key
+# Your OpenCalais API Key. (Get one at http://www.opencalais.com/APIkey)
 CALAIS_API_KEY = 'put your key here'
 
 # Uncomment the next line to enable debugging
