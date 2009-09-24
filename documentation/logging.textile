@@ -1,0 +1,40 @@
+h1. Logging
+
+This readme explains how developers working on the newscredit code can make use of the logging already configured in the newscredit project.
+
+h2. Overview
+
+Logging uses the Python logging class and can be output to console or file depending on the @localsettings@ option.
+
+h2. Activating Logging
+
+There is an option in the @localsettings.py@ file which does this which is *LOG_LEVEL*. @LOG_LEVEL@ will control how verbose the output is and it's supported values are:
+
+* CRITICAL
+* ERROR
+* WARNING
+* INFO
+* DEBUG
+
+When entering the logging level ensure it is entered as capitals. Log levels display messages for all log levels above them. So DEBUG will display all messages whilst WARNING will show only WARNING, ERROR and CRITICAL.
+
+To disable logging just comment (#) out the @LOG_LEVEL@ line.
+
+h2. Logging to file
+
+By default the logger will output log messages to the console. To enable logging to file you need to uncomment the @localsettings@ option *LOG_TO_FILE* and ensure it's value is @True@.
+
+h2. Adding logging to your code
+
+If you need logging in your code you will need to add the following code.
+
+h3. For logging in a class
+
+# Import the logging library using @import logging@
+# In your class init function add @self.logger = logging.getLogger( 'APP.CLASSNAME')@ where APP is the name of your django app and CLASSNAME is the name of your class, e.g. crawler.FetchIt
+# In methods where you want logging to happen add @self.logger.LEVEL('message')@ where LEVEL is either _critical,error,warning,info,debug_.
+
+h3. For logging outside of a class
+# Import the logging library using @import logging@
+# In your script add @logger = logging.getLogger('APP')@ where APP is the name of your django app.
+# In methods where you want logging to happen add @logger.LEVEL('message')@ where LEVEL is either _critical,error,warning,info,debug_.

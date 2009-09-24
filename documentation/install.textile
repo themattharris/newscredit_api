@@ -1,0 +1,95 @@
+h1. Installation
+
+This readme explains how to run install the newscredit project and it's dependancies onto your local machine.
+
+h2. Assumptions
+
+We assume you're running Python 2.5.x on your machine. Python 2.6.x should work but has not been fully tested. You can find out which version you have by typing @python --version@. We also assume you have MySQL installed from the MySQL MacOS download rather than the MAMP edition. You can get MySQL from http://dev.mysql.com/downloads/mysql/5.1.html#downloads.
+
+The last thing we assume is that you have Git installed on your computer. If not you can get it from http://git-scm.com/download.
+
+h2. Installing the Python Libraries
+
+All of the following commands should be entered into your console. For MacOS users this is @terminal.app@
+
+h3. Setuptools
+
+The install process is made a lot easier if you have setuptools installed. You can check this by typing @easy_install --help@ into your console. You should see a list of usage instructions. If instead you get @-bash: easy_install: command not found@ you don't have setuptools installed. Please visit http://pypi.python.org/pypi/setuptools and follow the instructions on their site for installing.
+
+h3. Python Libraries
+
+Newscredit requires a few additional libraries to be installed to allow it to work. We're going to use setuptools to install them as it is the easiest and fastest way.
+
+All of the required libraries are listed below, along with their corresponding @easy_install@ package name. To install them run the command @sudo easy_install PACKAGE_NAME@ replacing @PACKAGE_NAME@ with the package name listed below. The @sudo@ at the beginning allows the files to be installed to system areas of the computer. This means you will be asked for your password when running the command.
+
+* Django. package: @django@
+* Django Extensions. package: @django_extensions@
+* Django Tagging. package: @django_tagging@
+* Werkzeug. package: @werkzeug@
+* Simplejson. package: @simplejson@
+* BeautifulSoup. package: @beautifulsoup@
+* MySQLdb. package: @MySQL-python@
+
+h3. Open Calais Library
+
+Newscredit uses the OpenCalais API to gather information about articles so we need to install the Python library for it. To do this enter the following commands into your console.
+
+# @cd ~/@
+# @svn co http://python-calais.googlecode.com/svn/trunk python_calais@
+# @sudo easy_install python_calais@
+# @rm -fR python_calais@
+
+What this does is take you to your home folder and then 'checksout' the latest version of python calais from GoogleCode. We then use easy_install to install the package. The @rm -fR@ at the end deletes the python calais code we checked out from Google as we don't need it once it is installed.
+
+h2. Getting the Newscredit Code
+
+The Newscredit code is stored on Github. To download a copy to your computer you will need to *clone* the code. To do this you need to:
+
+# @cd@ to a location on your computer you wish the code to go. On MacOS this could be @~/Sites@
+# Clone the code:
+@git clone git://github.com/markng/newscredit_api.git@
+
+We now need to get the Solango submodule. To this type:
+
+# @cd newscredit_api@
+# @git submodule init@
+# @git submodule update@
+
+h2. Installing the Search Server (Solr)
+
+From the Solr homepage http://lucene.apache.org/solr/ follow the links to download the latest zip version to the location where you wish the code to go. On MacOS this could be @~/Sites@.
+
+To install the server type the following:
+
+# @cd@ to a location on your computer you wish the code to go. On MacOS this could be @~/Sites@
+# @unzip apache-solr-1.3.0.zip@
+
+After unzipping Solr you can remove the zip file if you wish. @rm apache-solr-1.3.0.zip@
+
+h2. Create a database
+
+Using whichever method you prefer, create a database in MySQL which django can use.
+
+h2. Configuring your localsettings
+
+We've now got all the code we need to run the server. Copy @localsettings.template.py@ in the @newscredit_api@ folder as @localsettings.py@.
+
+Using your preferred textedit edit @localsettings.py@ and fill in the details for your local environment. Make sure you complete these fields:
+
+* DATABASE_ENGINE
+* DATABASE_NAME
+* DATABASE_USER
+* DATABASE_PASSWORD
+* SECRET_KEY
+* SOLR_ROOT - At the moment this will be @something/apache-solr-1.3.0/example@ (the easiest way to get this is to @cd@ into the apache-solr-1.3.0 folder unzipped earlier and then type @pwd@. You can then copy and paste the path, but don't forget to add @/example/@ onto the end).
+* CALAIS_API_KEY
+
+h2. Setting up the database and search schema
+
+Using the console we'll now install the database and solr schema. To do this do the follwoing:
+
+# Change directory to the newscredit_api folder. @cd ~/Sites/newscredit_api@
+# Run sync db and create a new superuser by following the prompts. @./manage.py syncdb@
+# Create the solr schema. @./manage.py solr --schema@
+
+Congratulations everything is now installed! See usage.textile for instructions on running the system.

@@ -1,0 +1,53 @@
+h1. Usage
+
+This readme explains how to run the newscredit project on your local machine. It is assumed you have completed the steps described in install.textile already.
+
+All commands run in the console and should be run from the newscredit_api folder, e.g. @~/Sites/newscredit_api@
+
+h2. Starting the services
+
+Newscredit has three services which need to run for the system to work. This means you will need *three* console windows open. On MacOS you can run three tabs in @terminal.app@ by opening one and then pressing @cmd-t@.
+
+To start the services enter each command below into it's own console:
+
+# ./manage.py runserver_plus
+# ./manage.py solr --start
+# ./manage.py run_daemon
+
+To stop the services press @ctrl-c@
+
+h2. Adding a crawl site
+
+Using your preferred web browser open @http://localhost:8000/admin@ and login with the superuser details you created on install.
+
+On the site administration page under Crawler you should see an entry *Crawl sites*. Click on the *Add* on that row.
+
+Enter the full website you wish to crawl into the *Site URL:* box, for example @http://www.opendemocracy.net@, and then click save.
+
+The site will then start crawling. You should see the URLs being crawled appearing in the console window which is running the daemon.
+
+Once some content has been crawled visit @http://localhost:8000@ and try searching.
+
+h2. Flushing the databases
+
+*Warning!* this process will delete all crawled sites and their associated data from the system. It will also delete all the search data and indices. Only do this if you really know why you are doing it.
+
+* To delete the search indices type @./manage.py solr --flush@. You will be asked to confirm this is what you want to do.
+* To flush the django database use following SQL query. The query will delete *ALL* newscredit data but leave the django users, groups, admin log intact and newscredit table structure intact.
+<pre><code>TRUNCATE TABLE `crawler_article`;
+TRUNCATE TABLE `crawler_articleentity`;
+TRUNCATE TABLE `crawler_author`;
+TRUNCATE TABLE `crawler_authorname`;
+TRUNCATE TABLE `crawler_authorname_articles`;
+TRUNCATE TABLE `crawler_feedpagearticle`;
+TRUNCATE TABLE `crawler_name`;
+TRUNCATE TABLE `crawler_name_articles`;
+TRUNCATE TABLE `crawler_principles`;
+TRUNCATE TABLE `crawler_principles_articles`;
+TRUNCATE TABLE `crawler_revision`;
+TRUNCATE TABLE `crawler_workedon`;
+TRUNCATE TABLE `entify_organisation`;
+TRUNCATE TABLE `entify_person`;
+TRUNCATE TABLE `entify_place`;
+TRUNCATE TABLE `tagging_tag`;
+TRUNCATE TABLE `tagging_taggeditem`;</code></pre>
